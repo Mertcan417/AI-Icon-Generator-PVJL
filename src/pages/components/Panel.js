@@ -1,56 +1,237 @@
+// Panel.js
 import { IoIosSettings } from "react-icons/io";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { TfiDownload } from "react-icons/tfi";
 
 export default function Panel() {
+  const [prompt, setPrompt] = useState("");
+  const [amount, setAmount] = useState(1);
+  const [quality, setQuality] = useState("Mid");
+  const [results, setResults] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [showPromptAlert, setShowPromptAlert] = useState(false);
+  const [credits, setCredits] = useState(0);
+
+  useEffect(() => {
+    const savedCredits = localStorage.getItem("credits");
+    if (savedCredits !== null) {
+      setCredits(parseInt(savedCredits));
+    } else {
+      setCredits(2);
+    }
+  }, []);
+
+  const saveCredits = (credits) => {
+    localStorage.setItem("credits", credits.toString());
+  };
+
+  const generateImage = async () => {
+    if (prompt.trim().length < 5) {
+      setShowPromptAlert(true);
+      return;
+    }
+
+    if (credits <= 0) {
+      setShowAlert(true);
+      return;
+    }
+
+    try {
+      const response = await axios.post("/api/proxy", {
+        prompt: prompt.trim(),
+        samples: amount,
+        quality: quality.toUpperCase(),
+      });
+
+      setCredits((prevCredits) => prevCredits - 1);
+      saveCredits(credits - 1);
+
+      const imageUrls = response.data.data.map((item) => item.asset_url);
+      setResults((prevResults) => [...prevResults, ...imageUrls]);
+    } catch (error) {
+      console.error("Error generating image:", error);
+    }
+  };
+
+  const openInNewTab = (url) => {
+    const newWindow = window.open(url, "_blank");
+    if (newWindow) {
+      newWindow.focus();
+    } else {
+      alert("Please allow pop-ups for this site");
+    }
+  };
+
+  const handleAmountChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    if (value > 4 || value === 0) {
+      setShowAlert(true);
+      setAmount(4);
+    } else {
+      setShowAlert(false);
+      setAmount(value);
+    }
+  };
+
+  const closeAlert = () => {
+    setShowAlert(false);
+  };
+
+  const closePromptAlert = () => {
+    setShowPromptAlert(false);
+  };
+
   return (
     <div
-      className="panel rounded-3xl mt-6 mx-32 flex py-6 px-10 font-bold flex-wrap" style={{backgroundColor:"#f2f2f2", fontSize:"20px"}}
+      className="panel rounded-3xl mt-6 mx-32 flex py-6 px-10 font-bold flex-wrap"
+      style={{ backgroundColor: "#f2f2f2", fontSize: "20px" }}
     >
       <div className="panel-left grow flex flex-col mt-7">
         <div className="generate-icon-section">
           <h1>Generate Icon</h1>
           <textarea
             className="generate-icon-text rounded-2xl text-base font-normal p-3"
-            placeholder="Type here to create an icon"
+            placeholder="Type here to create an icon (min 5 characters)"
             style={{ width: "459px", height: "144px" }}
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            required
           ></textarea>
+          {showPromptAlert && (
+            <div
+              className="bg-red-100 border-1-4 border-red-400 text-red-700 p-4 rounded relative mt-5"
+              role="alert"
+              style={{ width: "459px" }}
+            >
+              <p className="font-bold">Too short!</p>
+              <p className="block sm:inline font-normal text-base">
+                The prompt should be at least 5 characters long and not just
+                spaces.
+              </p>
+              <span
+                className="absolute top-0 bottom-0 right-0 px-4 py-3"
+                onClick={closePromptAlert}
+              >
+                <svg
+                  className="fill-current h-6 w-6 text-red-500"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <title>Close</title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+              </span>
+            </div>
+          )}
         </div>
-        <div className="model-section mt-7">
-          <h1>Model</h1>
-
+        <div className="quality-section mt-7">
+          <h1>Quality</h1>
           <div
-            className="model-buttons bg-white rounded-3xl flex justify-center items-center"
+            className="quality-buttons bg-white rounded-3xl flex justify-center items-center"
             style={{ maxWidth: "459px", height: "144px" }}
           >
             <div className="flex gap-10">
-              <button className="bg-blue-600 text-white w-32 h-16 px-4 py-2 rounded-3xl font-normal hover:bg-blue-800 focus:ring active:bg-blue-950" 
-              style={{ maxWidth: "192px", maxHeight: "64px" }}>
-                Dalle 2
-              </button>
-              <button className="bg-blue-600 text-white w-32 h-16 px-4 py-2 rounded-3xl font-normal hover:bg-blue-800 focus:ring active:bg-blue-950">
-                Dalle 3
-              </button>
+              {["Low", "Mid", "High"].map((q) => (
+                <button
+                  key={q}
+                  className={`w-24 h-16 px-4 py-2 rounded-3xl font-normal ${
+                    quality === q ? "bg-blue-950" : "bg-blue-600"
+                  } text-white`}
+                  onClick={() => setQuality(q)}
+                >
+                  {q}
+                </button>
+              ))}
             </div>
           </div>
         </div>
-
         <div className="amount-section mt-7">
           <h1>Amount</h1>
-          <input type="text" className="amount-text rounded-2xl p-3" 
-            style={{ width: "459px"}}
-        
-          value={2} />
+          <input
+            type="number"
+            className="amount-text rounded-2xl p-3 font-normal"
+            min="1"
+            max="4"
+            style={{ width: "459px" }}
+            value={amount}
+            onChange={handleAmountChange}
+          />
+          {showAlert && (
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 p-4 rounded relative mt-4"
+              style={{ width: "459px" }}
+              role="alert"
+            >
+              <strong className="font-bold">Holy smokes!</strong>
+              <p className="font-normal text-base">
+                The minimum amount is 1 and maximum amount is 4.
+              </p>
+              <span
+                className="absolute top-0 bottom-0 right-0 px-4 py-3"
+                onClick={closeAlert}
+              >
+                <svg
+                  className="fill-current h-6 w-6 text-red-500"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <title>Close</title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+              </span>
+            </div>
+          )}
         </div>
-        <button className="flex items-center mt-7 bg-blue-600 text-white w-40 h-16 px-4 py-2 rounded-3xl font-normal hover:bg-blue-800 focus:ring active:bg-blue-950">
-        <IoIosSettings className="mr-1"/>
-        Generate</button>
+        <button
+          className="flex items-center mt-7 bg-blue-600 text-white w-40 h-16 px-4 py-2 rounded-3xl font-normal hover:bg-blue-800 focus:ring active:bg-blue-950"
+          onClick={generateImage}
+        >
+          <IoIosSettings className="mr-1" />
+          Generate
+        </button>
       </div>
-
       <div className="panel-right grow mt-7">
         <h1>Results</h1>
-        <div className="generated-icons-result rounded-2xl p-3 bg-white w-[526px] h-[632px]">
-</div>
-
+        <div className="generated-icons-result rounded-2xl p-3 bg-white w-[526px] h-[632px] flex flex-wrap gap-10">
+          {results.map((url, index) => (
+            <div key={index} className="image-container relative">
+              <TfiDownload
+                className="download-icon absolute top-0 left-1/2 transform -translate-x-1/2 text-white cursor-pointer"
+                onClick={() => openInNewTab(url)}
+              />
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={url}
+                  alt={`Generated ${index}`}
+                  className="w-48 h-48 object-cover rounded-full cursor-pointer"
+                  onClick={() => openInNewTab(url)}
+                />
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
+      {showAlert && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white rounded-lg p-8">
+            <p className="text-center text-red-500 font-bold mb-4">
+              Insufficient Credits
+            </p>
+            <p className="text-center text-base">
+              You do not have enough credits. Please buy more.
+            </p>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
+              onClick={() => setShowAlert(false)}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
