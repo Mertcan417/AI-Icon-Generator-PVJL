@@ -27,7 +27,7 @@ export default function Home() {
             {credits} credit(s)
           </div>
         </div>
-        <Panel />
+        <Panel setCredits={setCredits} credits={credits} />
       </main>
     </div>
   );

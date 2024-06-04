@@ -11,7 +11,7 @@ export default async function handler(req, res) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer lmwr_sk_0petDyN70v_1qzSOXkcWksba59peGWzp4zWVjh2B9SZtnTze`, // Use environment variable for API key
+            'Authorization': `Bearer ${process.env.API_KEY}`, // Use environment variable for API key
             'Accept': 'application/json',
             'X-Api-Version': 'v1',
           },

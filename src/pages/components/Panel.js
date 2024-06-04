@@ -4,17 +4,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { TfiDownload } from "react-icons/tfi";
 
-export default function Panel() {
+export default function Panel({setCredits, credits}) {
   const [prompt, setPrompt] = useState("");
   const [amount, setAmount] = useState(1);
   const [quality, setQuality] = useState("Mid");
   const [results, setResults] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [showPromptAlert, setShowPromptAlert] = useState(false);
-  const [credits, setCredits] = useState(0);
 
   useEffect(() => {
     const savedCredits = localStorage.getItem("credits");
+    console.log("LOCALSTORAGE CREDITS: "+ savedCredits);
     if (savedCredits !== null) {
       setCredits(parseInt(savedCredits));
     } else {
