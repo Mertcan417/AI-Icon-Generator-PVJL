@@ -3,18 +3,20 @@ import { IoIosSettings } from "react-icons/io";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { TfiDownload } from "react-icons/tfi";
+import LoadingScreen from "./LoadingScreen";  // Import the LoadingScreen component
 
-export default function Panel({setCredits, credits}) {
+export default function Panel({ setCredits, credits }) {
   const [prompt, setPrompt] = useState("");
   const [amount, setAmount] = useState(1);
   const [quality, setQuality] = useState("Mid");
   const [results, setResults] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [showPromptAlert, setShowPromptAlert] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);  // Add loading state
 
   useEffect(() => {
     const savedCredits = localStorage.getItem("credits");
-    console.log("LOCALSTORAGE CREDITS: "+ savedCredits);
+    console.log("LOCALSTORAGE CREDITS: " + savedCredits);
     if (savedCredits !== null) {
       setCredits(parseInt(savedCredits));
     } else {
@@ -37,6 +39,8 @@ export default function Panel({setCredits, credits}) {
       return;
     }
 
+    setIsLoading(true);  // Show loading screen
+
     try {
       const response = await axios.post("/api/proxy", {
         prompt: prompt.trim(),
@@ -51,6 +55,8 @@ export default function Panel({setCredits, credits}) {
       setResults((prevResults) => [...prevResults, ...imageUrls]);
     } catch (error) {
       console.error("Error generating image:", error);
+    } finally {
+      setIsLoading(false);  // Hide loading screen
     }
   };
 
@@ -83,31 +89,26 @@ export default function Panel({setCredits, credits}) {
   };
 
   return (
-    <div
-      className="panel rounded-3xl mt-6 mx-32 flex py-6 px-10 font-bold flex-wrap"
-      style={{ backgroundColor: "#f2f2f2", fontSize: "20px" }}
-    >
+    <div className="panel rounded-3xl mt-6 mx-32 flex py-6 px-10 font-bold flex-wrap bg-gray-100 text-xl">
+      {isLoading && <LoadingScreen />}  {/* Render loading screen when isLoading is true */}
       <div className="panel-left grow flex flex-col mt-7">
         <div className="generate-icon-section">
           <h1>Generate Icon</h1>
           <textarea
-            className="generate-icon-text rounded-2xl text-base font-normal p-3"
+            className="generate-icon-text rounded-2xl text-base font-normal p-3 w-[459px] h-[144px]"
             placeholder="Type here to create an icon (min 5 characters)"
-            style={{ width: "459px", height: "144px" }}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             required
           ></textarea>
           {showPromptAlert && (
             <div
-              className="bg-red-100 border-1-4 border-red-400 text-red-700 p-4 rounded relative mt-5"
+              className="bg-red-100 border-l-4 border-red-400 text-red-700 p-4 rounded relative mt-5 w-[459px]"
               role="alert"
-              style={{ width: "459px" }}
             >
               <p className="font-bold">Too short!</p>
               <p className="block sm:inline font-normal text-base">
-                The prompt should be at least 5 characters long and not just
-                spaces.
+                The prompt should be at least 5 characters long and not just spaces.
               </p>
               <span
                 className="absolute top-0 bottom-0 right-0 px-4 py-3"
@@ -128,10 +129,7 @@ export default function Panel({setCredits, credits}) {
         </div>
         <div className="quality-section mt-7">
           <h1>Quality</h1>
-          <div
-            className="quality-buttons bg-white rounded-3xl flex justify-center items-center"
-            style={{ maxWidth: "459px", height: "144px" }}
-          >
+          <div className="quality-buttons bg-white rounded-3xl flex justify-center items-center max-w-[459px] h-[144px]">
             <div className="flex gap-10">
               {["Low", "Mid", "High"].map((q) => (
                 <button
@@ -151,17 +149,15 @@ export default function Panel({setCredits, credits}) {
           <h1>Amount</h1>
           <input
             type="number"
-            className="amount-text rounded-2xl p-3 font-normal"
+            className="amount-text rounded-2xl p-3 font-normal w-[459px]"
             min="1"
             max="4"
-            style={{ width: "459px" }}
             value={amount}
             onChange={handleAmountChange}
           />
           {showAlert && (
             <div
-              className="bg-red-100 border border-red-400 text-red-700 p-4 rounded relative mt-4"
-              style={{ width: "459px" }}
+              className="bg-red-100 border border-red-400 text-red-700 p-4 rounded relative mt-4 w-[459px]"
               role="alert"
             >
               <strong className="font-bold">Holy smokes!</strong>

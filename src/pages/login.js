@@ -1,15 +1,21 @@
 // pages/login.js
 import Link from 'next/link';
+import AILogo from './components/AIBrain';
 
 const LoginPage = () => {
   return (
     <div className="w-full h-full p-10">
+    <header>
+    <nav className="flex justify-between">
+      <AILogo/>
+      </nav>
+      </header>
       <h1 className="text-5xl text-center font-bold">Login</h1>
       <div className="flex justify-center mt-10">
         <div
-          className="panel rounded-3xl mt-6 mx-32 flex py-6 px-10 font-normal flex-wrap w-full justify-center"
+          className="panel rounded-3xl mt-6 mx-32 flex py-6 px-10 font-normal flex-wrap justify-center"
           style={{ backgroundColor: "#f2f2f2", fontSize: "20px", height:"732px"}}
-        >
+          >
           <form className="flex flex-col justify-center items-center gap-10">
             <div className="flex flex-col items-center gap-5">
 
@@ -37,7 +43,7 @@ const LoginPage = () => {
               type="submit"
               className="flex items-center justify-center bg-blue-600 text-white w-40 h-12 px-2 py-2 rounded-3xl hover:bg-blue-800 focus:ring active:bg-blue-950"
               style={{ fontSize: "20px" }}
-            >
+              >
               Login
             </button>
           </form>

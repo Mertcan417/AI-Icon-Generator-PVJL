@@ -17,7 +17,7 @@ body {
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
   overflow-x: hidden; /* Optional: Hide horizontal overflow */
-  font-family: 'Inter'
+  font-family: 'Poppins', sans-serif;
 }
 
 #__next{
