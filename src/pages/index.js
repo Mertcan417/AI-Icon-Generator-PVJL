@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Panel from "./components/Panel";
-import styles from "./components/styles/index.module.css";
 import { HiOutlineCreditCard } from "react-icons/hi";
 import AIBrain from "./components/AIBrain";
 
@@ -18,7 +17,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className={styles.app}>
+    <div className="p-10 w-full h-full">
       <Header />
       <main>
         <h1 className="text-5xl text-center font-bold">AI Icon Generator</h1>
@@ -32,7 +31,6 @@ export default function Home() {
       </main>
 
       <section class="mt-10 py-24 relative">
-        <div class="absolute h-[36.5rem] w-full top-0"></div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="mb-12">
                 <h2 class="font-manrope text-5xl text-center font-bold text-black mb-4">Suitable pricing plans</h2>

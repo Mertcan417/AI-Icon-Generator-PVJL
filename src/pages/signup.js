@@ -35,7 +35,7 @@ const SignupPage = () => {
 
   return (
     <div className="w-full h-full p-10">
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center">
 
       {successMessage && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">

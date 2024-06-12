@@ -18,7 +18,9 @@ body {
   padding: 0; /* Remove default padding */
   overflow-x: hidden; /* Optional: Hide horizontal overflow */
   font-family: 'Poppins', sans-serif;
+
 }
+
 
 #__next{
   width: 100vw;

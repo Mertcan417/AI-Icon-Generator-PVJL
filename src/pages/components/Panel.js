@@ -1,9 +1,8 @@
-// Panel.js
 import { IoIosSettings } from "react-icons/io";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { TfiDownload } from "react-icons/tfi";
-import LoadingScreen from "./LoadingScreen";  // Import the LoadingScreen component
+import LoadingScreen from "./LoadingScreen";
 
 export default function Panel({ setCredits, credits }) {
   const [prompt, setPrompt] = useState("");
@@ -12,7 +11,7 @@ export default function Panel({ setCredits, credits }) {
   const [results, setResults] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [showPromptAlert, setShowPromptAlert] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);  // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const savedCredits = localStorage.getItem("credits");
@@ -39,7 +38,7 @@ export default function Panel({ setCredits, credits }) {
       return;
     }
 
-    setIsLoading(true);  // Show loading screen
+    setIsLoading(true);
 
     try {
       const response = await axios.post("/api/proxy", {
@@ -56,7 +55,7 @@ export default function Panel({ setCredits, credits }) {
     } catch (error) {
       console.error("Error generating image:", error);
     } finally {
-      setIsLoading(false);  // Hide loading screen
+      setIsLoading(false);
     }
   };
 
@@ -89,30 +88,32 @@ export default function Panel({ setCredits, credits }) {
   };
 
   return (
-    <div className="panel rounded-3xl mt-6 mx-32 flex py-6 px-10 font-bold flex-wrap bg-gray-100 text-xl">
-      {isLoading && <LoadingScreen />}  {/* Render loading screen when isLoading is true */}
+    <div className="panel rounded-3xl mt-6 mx-auto flex flex-col lg:flex-row py-6 px-4 lg:px-10 font-bold flex-wrap bg-gray-100 text-xl shadow-lg max-w-6xl">
+      {isLoading && <LoadingScreen />}
       <div className="panel-left grow flex flex-col mt-7">
         <div className="generate-icon-section">
-          <h1>Generate Icon</h1>
+          <h1 className="text-2xl mb-4">Generate Icon</h1>
           <textarea
-            className="generate-icon-text rounded-2xl text-base font-normal p-3 w-[459px] h-[144px]"
+            className="generate-icon-text rounded-2xl text-base font-normal p-3 w-full lg:w-[459px] h-[144px] border border-gray-300"
             placeholder="Type here to create an icon (min 5 characters)"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             required
+            aria-label="Icon prompt input"
           ></textarea>
           {showPromptAlert && (
             <div
-              className="bg-red-100 border-l-4 border-red-400 text-red-700 p-4 rounded relative mt-5 w-[459px]"
+              className="bg-red-100 border-l-4 border-red-400 text-red-700 p-4 rounded relative mt-5 w-full lg:w-[459px]"
               role="alert"
             >
               <p className="font-bold">Too short!</p>
               <p className="block sm:inline font-normal text-base">
                 The prompt should be at least 5 characters long and not just spaces.
               </p>
-              <span
+              <button
                 className="absolute top-0 bottom-0 right-0 px-4 py-3"
                 onClick={closePromptAlert}
+                aria-label="Close alert"
               >
                 <svg
                   className="fill-current h-6 w-6 text-red-500"
@@ -123,14 +124,14 @@ export default function Panel({ setCredits, credits }) {
                   <title>Close</title>
                   <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
                 </svg>
-              </span>
+              </button>
             </div>
           )}
         </div>
         <div className="quality-section mt-7">
-          <h1>Quality</h1>
-          <div className="quality-buttons bg-white rounded-3xl flex justify-center items-center max-w-[459px] h-[144px]">
-            <div className="flex gap-10">
+          <h1 className="text-2xl mb-4">Quality</h1>
+          <div className="quality-buttons bg-white rounded-3xl flex justify-center items-center w-full lg:w-[459px] h-[144px] shadow-inner">
+            <div className="flex gap-4 lg:gap-10">
               {["Low", "Mid", "High"].map((q) => (
                 <button
                   key={q}
@@ -138,6 +139,7 @@ export default function Panel({ setCredits, credits }) {
                     quality === q ? "bg-blue-950" : "bg-blue-600"
                   } text-white`}
                   onClick={() => setQuality(q)}
+                  aria-pressed={quality === q}
                 >
                   {q}
                 </button>
@@ -146,27 +148,29 @@ export default function Panel({ setCredits, credits }) {
           </div>
         </div>
         <div className="amount-section mt-7">
-          <h1>Amount</h1>
+          <h1 className="text-2xl mb-4">Amount</h1>
           <input
             type="number"
-            className="amount-text rounded-2xl p-3 font-normal w-[459px]"
+            className="amount-text rounded-2xl p-3 font-normal w-full lg:w-[459px] border border-gray-300"
             min="1"
             max="4"
             value={amount}
             onChange={handleAmountChange}
+            aria-label="Amount of icons to generate"
           />
           {showAlert && (
             <div
-              className="bg-red-100 border border-red-400 text-red-700 p-4 rounded relative mt-4 w-[459px]"
+              className="bg-red-100 border border-red-400 text-red-700 p-4 rounded relative mt-4 w-full lg:w-[459px]"
               role="alert"
             >
               <strong className="font-bold">Holy smokes!</strong>
               <p className="font-normal text-base">
                 The minimum amount is 1 and maximum amount is 4.
               </p>
-              <span
+              <button
                 className="absolute top-0 bottom-0 right-0 px-4 py-3"
                 onClick={closeAlert}
+                aria-label="Close alert"
               >
                 <svg
                   className="fill-current h-6 w-6 text-red-500"
@@ -177,26 +181,28 @@ export default function Panel({ setCredits, credits }) {
                   <title>Close</title>
                   <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
                 </svg>
-              </span>
+              </button>
             </div>
           )}
         </div>
         <button
-          className="flex items-center mt-7 bg-blue-600 text-white w-40 h-16 px-4 py-2 rounded-3xl font-normal hover:bg-blue-800 focus:ring active:bg-blue-950"
+          className="flex items-center mt-7 bg-blue-600 text-white w-full lg:w-40 h-16 px-4 py-2 rounded-3xl font-normal hover:bg-blue-800 focus:ring active:bg-blue-950 shadow-md"
           onClick={generateImage}
+          aria-label="Generate image"
         >
           <IoIosSettings className="mr-1" />
           Generate
         </button>
       </div>
       <div className="panel-right grow mt-7">
-        <h1>Results</h1>
-        <div className="generated-icons-result rounded-2xl p-3 bg-white w-[526px] h-[632px] flex flex-wrap gap-10">
+        <h1 className="text-2xl mb-4">Results</h1>
+        <div className="generated-icons-result rounded-2xl p-3 bg-white w-full lg:w-[526px] h-[632px] flex flex-wrap gap-4 lg:gap-10 shadow-inner overflow-auto">
           {results.map((url, index) => (
             <div key={index} className="image-container relative">
               <TfiDownload
-                className="download-icon absolute top-0 left-1/2 transform -translate-x-1/2 text-white cursor-pointer"
+                className="download-icon absolute top-0 left-1/2 transform -translate-x-1/2 text-white cursor-pointer hover:scale-125 transition-transform"
                 onClick={() => openInNewTab(url)}
+                aria-label={`Download image ${index + 1}`}
               />
               <a href={url} target="_blank" rel="noopener noreferrer">
                 <img
@@ -212,18 +218,17 @@ export default function Panel({ setCredits, credits }) {
       </div>
       {showAlert && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white rounded-lg p-8">
-            <p className="text-center text-red-500 font-bold mb-4">
-              Insufficient Credits
-            </p>
-            <p className="text-center text-base">
-              You do not have enough credits. Please buy more.
+          <div className="bg-white rounded-lg p-8 shadow-lg">
+            <h1 className="text-2xl mb-4">Alert</h1>
+            <p className="font-normal text-base">
+              The minimum amount is 1 and the maximum amount is 4.
             </p>
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
-              onClick={() => setShowAlert(false)}
+              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring active:bg-blue-950"
+              onClick={closeAlert}
+              aria-label="Close alert"
             >
-              OK
+              Close
             </button>
           </div>
         </div>
