@@ -92,7 +92,7 @@ export default function Panel({ setCredits, credits }) {
       {isLoading && <LoadingScreen />}
       <div className="panel-left grow flex flex-col mt-7">
         <div className="generate-icon-section">
-          <h1 className="text-2xl mb-4">Generate Icon</h1>
+          <h1 className="text-2xl mb-4">Prompt</h1>
           <textarea
             className="generate-icon-text rounded-2xl text-base font-normal p-3 w-full lg:w-[459px] h-[144px] border border-gray-300"
             placeholder="Type here to create an icon (min 5 characters)"

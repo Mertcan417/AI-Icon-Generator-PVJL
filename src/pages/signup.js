@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import AILogo from './components/AIBrain';
+import Header from './components/Header';
 
 const SignupPage = () => {
   const [username, setUsername] = useState('');
@@ -34,75 +34,68 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="w-full h-full p-10">
-      <div className="flex justify-center">
+    <div className="p-5">
+      <Header />
+      <div className='flex justify-center'>
 
-      {successMessage && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-          <span className="block sm:inline">{successMessage}</span>
-        </div>
-      )}
-      {errorMessage && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-          <span className="block sm:inline">{errorMessage}</span>
-        </div>
-      )}
+        {successMessage && (
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
+            <span className="block sm:inline">{successMessage}</span>
+          </div>
+        )}
+        {errorMessage && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+            <span className="block sm:inline">{errorMessage}</span>
+          </div>
+        )}
       </div>
-      <header>
-        <nav className="flex justify-between">
-          <AILogo />
-        </nav>
-      </header>
-      <h1 className="text-5xl text-center font-bold">Sign up</h1>
+      <h1 className="text-5xl text-center font-bold mt-12">Sign up</h1>
       <div className="flex justify-center mt-10">
-        <div
-          className="panel rounded-3xl mt-6 mx-32 flex py-6 px-10 font-normal flex-wrap justify-center"
-          style={{
-            backgroundColor: "#f2f2f2",
-            fontSize: "20px",
-            height: "732px",
-          }}
-        >
-          <form className="flex flex-col justify-center items-center gap-10" onSubmit={handleSubmit}>
-            <div className="flex flex-col items-center gap-5">
-              <label htmlFor="username">Username</label>
+        <div className="panel rounded-3xl mt-6 mx-6 sm:mx-10 lg:mx-32 flex py-6 px-10 font-normal flex-wrap justify-center"
+          style={{ backgroundColor: "#f2f2f2", fontSize: "20px" }}>
+          
+
+          <form className="flex flex-col justify-center items-center gap-6 w-full max-w-md" onSubmit={handleSubmit}>
+            <div className="flex flex-col items-center gap-4 w-full max-w-md">
+              <label htmlFor="username" className="text-lg font-medium">Username</label>
               <input
                 type="text"
                 id="username"
                 name="username"
-                className="text-center px-3 py-3 rounded-2xl font-normal"
-                minLength={8}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                className="text-center px-3 py-2 w-full rounded-2xl font-normal focus:outline-none focus:ring-2 focus:ring-blue-500"
+                minLength={8}
+                required
               />
             </div>
 
-            <div className="flex flex-col items-center gap-3">
-              <label htmlFor="password">Password</label>
+            <div className="flex flex-col items-center gap-4 w-full max-w-md">
+              <label htmlFor="password" className="text-lg font-medium">Password</label>
               <input
                 type="password"
                 id="password"
                 name="password"
-                className="text-center px-3 py-3 rounded-2xl font-normal"
-                minLength={8}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="text-center px-3 py-2 w-full rounded-2xl font-normal focus:outline-none focus:ring-2 focus:ring-blue-500"
+                minLength={8}
+                required
               />
             </div>
-            <div className="flex flex-col items-center">
-              <h6 style={{ fontSize: '14px' }}>
-                Already have an account?{' '}
+
+            <div className="flex items-center justify-between w-full max-w-md">
+              <h6 style={{ fontSize: "14px" }}>
+                Already have an account?
                 <span>
-                  <Link href="/login" className="text-blue-600 hover:text-blue-800 focus:ring active:text-blue-950 cursor-pointer">
-                    Login
-                  </Link>
+                  <Link href="/login" className="text-blue-600 hover:text-blue-800 focus:ring active:text-blue-950"> Login</Link>
                 </span>
               </h6>
             </div>
 
             <button
               type="submit"
-              className="flex items-center justify-center bg-blue-600 text-white w-40 h-12 px-2 py-2 rounded-3xl hover:bg-blue-800 focus:ring active:bg-blue-950"
+              className="flex items-center justify-center bg-blue-600 text-white w-full max-w-md h-12 px-2 py-2 rounded-3xl hover:bg-blue-800 focus:ring active:bg-blue-950"
               style={{ fontSize: '20px' }}
             >
               Sign up
