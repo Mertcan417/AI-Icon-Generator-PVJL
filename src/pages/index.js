@@ -1,122 +1,247 @@
-// index.js
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
-import Panel from "./components/Panel";
-import { HiOutlineCreditCard } from "react-icons/hi";
-import AIBrain from "./components/AIBrain";
+import Footer from "./components/Footer";
+import { Transition } from "@headlessui/react"; // Import Headless UI for transitions
 
 export default function Home() {
   const [credits, setCredits] = useState(0);
+  const [showWelcome, setShowWelcome] = useState(false); // State to control welcome section animation
 
   useEffect(() => {
     // Load credits from local storage on component mount
-    const savedCredits = localStorage.getItem('credits');
+    const savedCredits = localStorage.getItem("credits");
     if (savedCredits !== null) {
       setCredits(parseInt(savedCredits));
     }
+    // Trigger welcome section animation after delay
+    setTimeout(() => {
+      setShowWelcome(true);
+    }, 500);
   }, []);
 
+  // Refs for scroll targets
+  const featuresRef = useRef(null);
+  const pricingRef = useRef(null);
+
+  // Scroll to Features section
+  const scrollToFeatures = () => {
+    featuresRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Scroll to Pricing Plans section
+  const scrollToPricing = () => {
+    pricingRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="p-10 w-full h-full">
-      <Header />
-      <main>
-        <h1 className="text-5xl text-center font-bold">AI Icon Generator</h1>
-        <div className="flex justify-center mt-10">
-          <div className="flex items-center bg-yellow-500 text-white w-54 h-14 px-4 py-2 rounded-3xl hover:bg-yellow-600" style={{fontSize:'20px'}}>
-          <HiOutlineCreditCard className="mr-1"/>
-            {credits} credit(s)
-          </div>
-        </div>
-        <Panel setCredits={setCredits} credits={credits} />
-      </main>
-
-      <section class="mt-10 py-24 relative">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="mb-12">
-                <h2 class="font-manrope text-5xl text-center font-bold text-black mb-4">Suitable pricing plans</h2>
+    <>
+      <div className="p-5">
+        <Header
+          scrollToFeatures={scrollToFeatures}
+          scrollToPricing={scrollToPricing}
+        />
+        <main className="mt-12">
+          {/* Welcome Section */}
+          <section
+            className={`text-center ${
+              showWelcome
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 -translate-y-10"
+            } transition-opacity duration-1000 ease-in-out transform`}
+          >
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-4xl font-medium mb-4">
+                Welcome to <span className="text-blue-600">AI</span>conCraft
+              </h1>
+              <p className="text-lg mb-8">
+                Generate custom icons instantly with IconCraft.{" "}
+                <strong>Simply click</strong> to bring your ideas to life with
+                AI precision. Perfect for designers and enthusiasts alike,
+                IconCraft makes icon creation <strong>effortless</strong> and{" "}
+                <strong>fun</strong>. Start clicking and watch your creativity
+                unfold!
+              </p>
             </div>
-                <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-8 lg:space-y-0 lg:items-center">
-                    <div class="group relative flex flex-col mx-auto w-full max-w-sm bg-white rounded-2xl shadow-2xl transition-all duration-300  p-8 xl:p-12  ">
-                        <div class="border-b border-solid border-gray-200 pb-9 mb-9">
-                            <div class="w-16 h-16 rounded-full bg-yellow-500 mx-auto flex justify-center items-center transition-all duration-300">
-                            <HiOutlineCreditCard className="text-white font-bold text-3xl"/>
+          </section>
 
-                        </div>
-                        <h3 class="font-manrope text-2xl font-bold my-7 text-center text-blue-600">Free Plan</h3>
-                        <div class="flex items-center justify-center">
-                            <span class="font-manrope text-4xl font-medium text-gray-900">€0,00</span>
-                            <span class="text-xl text-gray-500 ml-3">|&nbsp; Month</span>
-                        </div>
-                    </div>
-                        <ul class="mb-12 space-y-6 text-left text-lg text-gray-600 group-hover:text-gray-900">
-                            <li class="flex items-center space-x-3.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                                <span>2 credits</span>
-                            </li>
-                            <li class="flex items-center space-x-3.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                                <span>Up to 2 images to generate</span>
-                            </li>
-                            
-                        </ul>
-                        <a href="javascript:;"  class="py-2.5 px-5 bg-blue-50 shadow-sm rounded-full transition-all duration-500 text-base text-blue-600 font-semibold text-center w-fit mx-auto group-hover:bg-blue-600 group-hover:text-white ">Purchase Plan</a>
-                    </div> 
-                    <div class="group relative flex flex-col mx-auto w-full max-w-sm bg-white rounded-2xl shadow-2xl transition-all duration-300  p-8 xl:p-12  ">
-                        <div class="border-b border-solid border-gray-200 pb-9 mb-9">
-                            <div class="w-16 h-16 rounded-full bg-yellow-500 mx-auto flex justify-center items-center transition-all duration-300">
-                            <HiOutlineCreditCard className="text-white font-bold text-3xl"/>
+          {/* Video Section */}
+          <section className="text-center mt-32">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-4xl font-medium mb-8">
+                Generate Icons with one click!
+              </h2>
+              <div className="w-full">
+                <video
+                  className="w-full h-auto rounded-xl shadow-md mx-auto"
+                  controls
+                  autoPlay
+                >
+                  <source src="/video2.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </section>
 
-                                    
-                        </div>
-                        <h3 class="font-manrope text-2xl font-bold my-7 text-center text-blue-600">Business Plan</h3>
-                        <div class="flex items-center justify-center">
-                            <span class="font-manrope text-4xl font-medium text-gray-900">€5</span>
-                            <span class="text-xl text-gray-500 ml-3">|&nbsp; Month</span>
-                        </div>
-                    </div>
-                        <ul class="mb-12 space-y-6 text-left text-lg text-gray-600 group-hover:text-gray-900">
-                            <li class="flex items-center space-x-3.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                                <span>20 credits</span>
-                            </li>
-                            <li class="flex items-center space-x-3.5">
-                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                                <span>Generate 20 images</span>
-                            </li>
-                        </ul>
-                        <a href="javascript:;"  class="py-2.5 px-5 bg-blue-50 shadow-sm rounded-full transition-all duration-500 text-base text-blue-600 font-semibold text-center w-fit mx-auto group-hover:bg-blue-600 group-hover:text-white ">Purchase Plan</a>
-                    </div> 
-                  <div class="group relative flex flex-col mx-auto w-full max-w-sm bg-white rounded-2xl shadow-2xl transition-all duration-300  p-8 xl:p-12  ">
-                    <div class="border-b border-solid border-gray-200 pb-9 mb-9">
-                        <div class="w-16 h-16 rounded-full bg-yellow-500 mx-auto flex justify-center items-center transition-all duration-300">
-                        <HiOutlineCreditCard className="text-white font-bold text-3xl"/>
-                                
-                    </div>
-                    <h3 class="font-manrope text-2xl font-bold my-7 text-center text-blue-600">Enterprise Plan</h3>
-                    <div class="flex items-center justify-center">
-                        <span class="font-manrope text-4xl font-medium text-gray-900">€10</span>
-                        <span class="text-xl text-gray-500 ml-3">|&nbsp; Month</span>
-                    </div>
+          {/* Features Section */}
+          <section className="text-center mt-32" ref={featuresRef}>
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-4xl font-medium mb-8">Features</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                {/* Feature Cards */}
+                <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
+                  <img
+                    src="/clock.png"
+                    alt="Clock icon"
+                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                  />
+                  <p className="text-sm text-center">
+                    There is <strong>no need</strong> for hiring a{" "}
+                    <strong>UX designer</strong>. With one click on the button,
+                    your icon will be complete.
+                  </p>
                 </div>
-                    <ul class="mb-12 space-y-6 text-left text-lg text-gray-600 group-hover:text-gray-900">
-                        <li class="flex items-center space-x-3.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                            <span>50 credits</span>
-                        </li>
-                        <li class="flex items-center space-x-3.5">
-                            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                            <span>Generate 50 images</span>
-                        </li>
-                    </ul>
-                    <a href="javascript:;"  class="py-2.5 px-5 bg-blue-50 shadow-sm rounded-full transition-all duration-500 text-base text-blue-600 font-semibold text-center w-fit mx-auto group-hover:bg-blue-600 group-hover:text-white ">Purchase Plan</a>
-                </div> 
+                <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
+                  <img
+                    src="/thumb.png"
+                    alt="Thumb icon"
+                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                  />
+                  <p className="text-sm text-center">
+                    The generated icons are of{" "}
+                    <strong>excellent quality</strong>.
+                  </p>
                 </div>
-        </div>
-    </section>
-                                            
-      
-    </div>
+                <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
+                  <img
+                    src="/blitz.png"
+                    alt="Blitz icon"
+                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                  />
+                  <p className="text-sm text-center">
+                    Icons generated <strong>quickly</strong>.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
+                  <img
+                    src="/cash.png"
+                    alt="Cash icon"
+                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                  />
+                  <p className="text-sm text-center">
+                    The application offers <strong>competitive pricing</strong>{" "}
+                    for credits required to generate{" "}
+                    <strong>high-quality images</strong>.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
+                  <img
+                    src="/service.png"
+                    alt="Service icon"
+                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                  />
+                  <p className="text-sm text-center">
+                    Users have several <strong>options</strong> when generating
+                    icons, including choices for{" "}
+                    <strong>resolution, style</strong>, and the{" "}
+                    <strong>quantity</strong> of images.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
+                  <img
+                    src="/extra.png"
+                    alt="Extra icon"
+                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                  />
+                  <p className="text-sm text-center">
+                    In addition to icon generation, the application offers
+                    features to <strong>edit</strong> existing images.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
+                  <img
+                    src="/clicking.png"
+                    alt="Clicking icon"
+                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                  />
+                  <p className="text-sm text-center">
+                    The application provides a <strong>user-friendly</strong>{" "}
+                    experience and is
+                    <strong>easy</strong> to navigate, devoid of complexity.
+                  </p>
+                </div>
+                <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
+                  <img
+                    src="/save.png"
+                    alt="Save icon"
+                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                  />
+                  <p className="text-sm text-center">
+                    All generated icons are automatically <strong>saved</strong>{" "}
+                    and accessible through a clear list.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Pricing Plans Section */}
+          <section className="mt-32 mb-24" ref={pricingRef}>
+            <div className="mx-auto">
+              <h2 className="text-4xl text-center font-medium mb-8">
+                Suitable pricing plans
+              </h2>
+              <div className="flex flex-wrap justify-center gap-4 sm:flex-no-wrap">
+                {/* Free Plan Card */}
+                <div className="bg-gradient-to-r text-white from-gray-400 to-blue-500 shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
+                  <div className="flex items-center mb-4">
+                    <h2 className="text-2xl font-bold">Starter</h2>
+                  </div>
+                  <div className="text-3xl font-bold mb-4">€10</div>
+                  <p className="mb-4">Generate up to 10 images</p>
+                  <ul className="mb-6">
+                    <li className="mb-2">10 credits</li>
+                  </ul>
+                  <button className="text-center py-2 px-4 rounded-lg bg-white text-blue-500 hover:bg-gray-200">
+                    Buy For €10
+                  </button>
+                </div>
+
+                {/* Starter Plan Card */}
+                <div className="bg-gradient-to-r text-white from-yellow-400 to-orange-500 shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
+                  <div className="flex items-center mb-4">
+                    <h2 className="text-2xl font-bold">Pro</h2>
+                  </div>
+                  <div className="text-3xl font-bold mb-4">€15</div>
+                  <p className="mb-4">Generate up to 50 images</p>
+                  <ul className="mb-6">
+                    <li className="mb-2">50 credits</li>
+                  </ul>
+                  <button className="text-center py-2 px-4 rounded-lg bg-white text-yellow-500 hover:bg-gray-200">
+                    Buy For €15
+                  </button>
+                </div>
+
+                {/* Enterprise Plan Card */}
+                <div className="bg-gradient-to-r text-white from-purple-500 via-pink-500 to-red-500 shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
+                  <div className="flex items-center mb-4">
+                    <h2 className="text-2xl font-bold">Enterprise</h2>
+                  </div>
+                  <div className="text-3xl font-bold mb-4">€20</div>
+                  <p className="mb-4">Generate up to 100 images</p>
+                  <ul className="mb-6">
+                    <li className="mb-2">100 credits</li>
+                  </ul>
+                  <button className="text-center py-2 px-4 rounded-lg bg-white text-purple-500 hover:bg-gray-200">
+                    Buy For €20
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+      <Footer />
+    </>
   );
 }
-
-

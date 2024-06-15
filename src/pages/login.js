@@ -1,15 +1,12 @@
 // pages/login.js
 import Link from 'next/link';
 import AILogo from './components/AIBrain';
+import Header from './components/Header';
 
 const LoginPage = () => {
   return (
     <div className="w-full h-full p-10">
-    <header>
-    <nav className="flex justify-between">
-      <AILogo/>
-      </nav>
-      </header>
+    <Header></Header>
       <h1 className="text-5xl text-center font-bold">Login</h1>
       <div className="flex justify-center mt-10">
         <div
