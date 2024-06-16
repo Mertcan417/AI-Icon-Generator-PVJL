@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 
 export default function Generator() {
   const [credits, setCredits] = useState(0);
+  const [username, setUsername] = useState("John Doe"); // Example username
 
   useEffect(() => {
     // Load credits from local storage on component mount
@@ -19,7 +20,7 @@ export default function Generator() {
   return (
     <>
       <div className="p-10 w-full">
-        <Header />
+        <Header isGeneratorPage={true} username={username} />
         <h1></h1>
         <main>
           <h1 className="text-4xl font-medium mb-4 text-center">
@@ -37,7 +38,7 @@ export default function Generator() {
           <Panel setCredits={setCredits} credits={credits} />
         </main>
       </div>
-      <Footer></Footer>
+      <Footer />
     </>
   );
 }

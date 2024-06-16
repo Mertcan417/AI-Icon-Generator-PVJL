@@ -42,8 +42,9 @@ export default function Panel({ setCredits, credits }) {
 
     try {
       const response = await axios.post("/api/proxy", {
-        prompt: prompt.trim(),
+        prompt: "an icon from the following text: "+ prompt.trim(),
         samples: amount,
+        guidance_scale:80,
         quality: quality.toUpperCase(),
       });
 

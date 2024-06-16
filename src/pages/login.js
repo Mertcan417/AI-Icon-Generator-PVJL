@@ -36,7 +36,7 @@ const LoginPage = () => {
         // Redirect to generator page
         setTimeout(() => {
           router.push('/generator'); // Redirect to the generator page
-        }, 1500); // Redirect after 1.5 seconds
+        }, 1000); // Redirect after 1.5 seconds
       } else {
         // Authentication failed
         setErrorMessage(data.message);
