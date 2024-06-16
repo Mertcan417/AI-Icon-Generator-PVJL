@@ -44,8 +44,8 @@ export default function Panel({ setCredits, credits }) {
       const response = await axios.post("/api/proxy", {
         prompt: "an icon from the following text: "+ prompt.trim(),
         samples: amount,
-        guidance_scale:80,
-        quality: quality.toUpperCase(),
+        guidance_scale:100,
+        quality: "HIGH",
       });
 
       setCredits((prevCredits) => prevCredits - 1);
@@ -91,11 +91,11 @@ export default function Panel({ setCredits, credits }) {
   return (
     <div className="panel rounded-3xl mt-6 mx-auto flex flex-col lg:flex-row py-6 px-4 lg:px-10 font-bold flex-wrap bg-gray-100 text-xl shadow-lg max-w-6xl">
       {isLoading && <LoadingScreen />}
-      <div className="panel-left grow flex flex-col mt-7">
+      <div className="panel-left grow flex flex-col mt-7 custom:items-center custom:text-center">
         <div className="generate-icon-section">
           <h1 className="text-2xl mb-4">Prompt</h1>
           <textarea
-            className="generate-icon-text rounded-2xl text-base font-normal p-3 w-full lg:w-[459px] h-[144px] border border-gray-300"
+            className="generate-icon-text rounded-2xl text-base font-normal custom:w-full p-3 w-[459px] h-[144px] border border-gray-300"
             placeholder="Type here to create an icon (min 5 characters)"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
@@ -112,12 +112,12 @@ export default function Panel({ setCredits, credits }) {
                 The prompt should be at least 5 characters long and not just spaces.
               </p>
               <button
-                className="absolute top-0 bottom-0 right-0 px-4 py-3"
+                className=""
                 onClick={closePromptAlert}
                 aria-label="Close alert"
               >
                 <svg
-                  className="fill-current h-6 w-6 text-red-500"
+                  className="absolute top-0 bottom-0 right-0 fill-current h-6 w-6 text-red-500"
                   role="button"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -129,23 +129,10 @@ export default function Panel({ setCredits, credits }) {
             </div>
           )}
         </div>
-        <div className="quality-section mt-7">
-          <h1 className="text-2xl mb-4">Quality</h1>
-          <div className="quality-buttons bg-white rounded-3xl flex justify-center items-center w-full lg:w-[459px] h-[144px] shadow-inner">
-            <div className="flex gap-4 lg:gap-10">
-              {["Low", "Mid", "High"].map((q) => (
-                <button
-                  key={q}
-                  className={`w-24 h-16 px-4 py-2 rounded-3xl font-normal ${
-                    quality === q ? "bg-blue-950" : "bg-blue-600"
-                  } text-white`}
-                  onClick={() => setQuality(q)}
-                  aria-pressed={quality === q}
-                >
-                  {q}
-                </button>
-              ))}
-            </div>
+        <div className="mt-7">
+          <h1 className="text-2xl mb-4">Upload an Image (Optional)</h1>
+          <div className="quality-buttons rounded-3xl custom:w-full lg:w-[459px]">
+          <input class="block w-full bg-blue-600 p-4 text-white text-lg rounded-lg cursor-pointer focus:outline-none" id="large_size" type="file"></input>
           </div>
         </div>
         <div className="amount-section mt-7">
@@ -161,7 +148,7 @@ export default function Panel({ setCredits, credits }) {
           />
           {showAlert && (
             <div
-              className="bg-red-100 border border-red-400 text-red-700 p-4 rounded relative mt-4 w-full lg:w-[459px]"
+              className="bg-red-100 border-l-4 border-red-400 text-red-700 p-4 rounded relative mt-5 w-full lg:w-[459px]"
               role="alert"
             >
               <strong className="font-bold">Holy smokes!</strong>
@@ -169,12 +156,12 @@ export default function Panel({ setCredits, credits }) {
                 The minimum amount is 1 and maximum amount is 4.
               </p>
               <button
-                className="absolute top-0 bottom-0 right-0 px-4 py-3"
+                className=""
                 onClick={closeAlert}
                 aria-label="Close alert"
               >
                 <svg
-                  className="fill-current h-6 w-6 text-red-500"
+                  className="fill-current h-6 w-6 text-red-500 absolute top-0 right-0"
                   role="button"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -187,7 +174,7 @@ export default function Panel({ setCredits, credits }) {
           )}
         </div>
         <button
-          className="flex items-center mt-7 bg-blue-600 text-white w-full lg:w-40 h-16 px-4 py-2 rounded-3xl font-normal hover:bg-blue-800 focus:ring active:bg-blue-950 shadow-md"
+          className="flex items-center mt-7 bg-blue-600 text-white lg:w-40 h-16 px-4 py-2 rounded-3xl font-normal hover:bg-blue-800 focus:ring active:bg-blue-950 shadow-md"
           onClick={generateImage}
           aria-label="Generate image"
         >
@@ -195,9 +182,9 @@ export default function Panel({ setCredits, credits }) {
           Generate
         </button>
       </div>
-      <div className="panel-right grow mt-7">
+      <div className="panel-right grow mt-7 flex flex-col custom:items-center">
         <h1 className="text-2xl mb-4">Results</h1>
-        <div className="generated-icons-result rounded-2xl p-3 bg-white w-full lg:w-[526px] h-[632px] flex flex-wrap gap-4 lg:gap-10 shadow-inner overflow-auto">
+        <div className="generated-icons-result rounded-2xl p-3 bg-white custom:w-full w-[526px] h-[632px] flex flex-wrap gap-4 lg:gap-10 shadow-inner overflow-auto justify-center">
           {results.map((url, index) => (
             <div key={index} className="image-container relative">
               <TfiDownload
@@ -217,23 +204,6 @@ export default function Panel({ setCredits, credits }) {
           ))}
         </div>
       </div>
-      {showAlert && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white rounded-lg p-8 shadow-lg">
-            <h1 className="text-2xl mb-4">Alert</h1>
-            <p className="font-normal text-base">
-              The minimum amount is 1 and the maximum amount is 4.
-            </p>
-            <button
-              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring active:bg-blue-950"
-              onClick={closeAlert}
-              aria-label="Close alert"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
