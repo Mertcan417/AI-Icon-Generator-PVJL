@@ -75,8 +75,9 @@ export default function Home() {
                   className="w-full h-auto rounded-xl shadow-md mx-auto"
                   controls
                   autoPlay
+                  loop
                 >
-                  <source src="/video2.mp4" type="video/mp4" />
+                  <source src="/video4.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -84,9 +85,9 @@ export default function Home() {
           </section>
 
           {/* Features Section */}
-          <section className="text-center mt-32" ref={featuresRef}>
+          <section className="text-center mt-32">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-4xl font-medium mb-8">Features</h2>
+              <h2 className="text-4xl font-medium mb-8" ref={featuresRef}>Features</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                 {/* Feature Cards */}
                 <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
@@ -186,9 +187,9 @@ export default function Home() {
           </section>
 
           {/* Pricing Plans Section */}
-          <section className="mt-32 mb-24" ref={pricingRef}>
+          <section className="mt-32 mb-24">
             <div className="mx-auto">
-              <h2 className="text-4xl text-center font-medium mb-8">
+              <h2 className="text-4xl text-center font-medium mb-8" ref={pricingRef}>
                 Suitable pricing plans
               </h2>
               <div className="flex flex-wrap justify-center gap-4 sm:flex-no-wrap">

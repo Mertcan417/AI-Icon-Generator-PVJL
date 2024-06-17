@@ -19,7 +19,7 @@ export default function Generator() {
 
   return (
     <>
-      <div className="p-10 w-full">
+      <div className="p-5">
         <Header isGeneratorPage={true} username={username} />
         <h1></h1>
         <main>
