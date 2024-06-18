@@ -7,11 +7,15 @@ import LoadingScreen from "./LoadingScreen";
 export default function Panel({ setCredits, credits }) {
   const [prompt, setPrompt] = useState("");
   const [amount, setAmount] = useState(1);
-  const [quality, setQuality] = useState("Mid");
   const [results, setResults] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [showPromptAlert, setShowPromptAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null); // State to store uploaded file
+
+  const handleFileUpload = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
   useEffect(() => {
     const savedCredits = localStorage.getItem("credits");
@@ -41,12 +45,18 @@ export default function Panel({ setCredits, credits }) {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("/api/proxy", {
-        prompt: "an icon from the following text: "+ prompt.trim(),
+      let requestBody = {
+        prompt: "an icon from the following text: " + prompt.trim(),
         samples: amount,
-        guidance_scale:100,
+        guidance_scale: 100,
         quality: "HIGH",
-      });
+      };
+
+      if (selectedFile) {
+        requestBody.image = selectedFile;
+      }
+      
+      const response = await axios.post("/api/proxy", requestBody);
 
       setCredits((prevCredits) => prevCredits - 1);
       saveCredits(credits - 1);
@@ -109,7 +119,8 @@ export default function Panel({ setCredits, credits }) {
             >
               <p className="font-bold">Too short!</p>
               <p className="block sm:inline font-normal text-base">
-                The prompt should be at least 5 characters long and not just spaces.
+                The prompt should be at least 5 characters long and not just
+                spaces.
               </p>
               <button
                 className=""
@@ -132,7 +143,12 @@ export default function Panel({ setCredits, credits }) {
         <div className="mt-7">
           <h1 className="text-2xl mb-4">Upload an Image (Optional)</h1>
           <div className="quality-buttons rounded-3xl custom:w-full lg:w-[459px]">
-          <input class="block w-full bg-blue-600 p-4 text-white text-lg rounded-lg cursor-pointer focus:outline-none" id="large_size" type="file"></input>
+            <input
+              class="block w-full bg-blue-600 p-4 text-white text-lg rounded-lg cursor-pointer focus:outline-none"
+              id="large_size"
+              type="file"
+              onChange={handleFileUpload}
+            ></input>
           </div>
         </div>
         <div className="amount-section mt-7">
