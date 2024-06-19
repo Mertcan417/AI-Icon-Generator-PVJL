@@ -1,5 +1,5 @@
 // pages/api/signup.js
-import { query } from '../utils/db';
+// import { query } from '../utils/db';
 import bcrypt from 'bcrypt';
 
 export default async function handler(req, res) {
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
     try {
       // Check if the username already exists
-      const userCheck = await query('SELECT * FROM users WHERE username = $1', [username]);
+      // const userCheck = await query('SELECT * FROM users WHERE username = $1', [username]);
       if (userCheck.length > 0) {
         return res.status(400).json({ error: 'User already exists' });
       }
@@ -21,10 +21,10 @@ export default async function handler(req, res) {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Insert user into the database
-      const result = await query(
-        'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *',
-        [username, hashedPassword]
-      );
+      // const result = await query(
+        // 'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *',
+        // [username, hashedPassword]
+      // );
 
       return res.status(200).json({ message: 'User signed up successfully', user: result[0] });
     } catch (error) {

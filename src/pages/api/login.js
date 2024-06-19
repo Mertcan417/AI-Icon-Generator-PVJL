@@ -1,7 +1,7 @@
 // pages/api/login.js
 
 import bcrypt from 'bcrypt'; // Import bcrypt for hashing functions
-import { query } from '../utils/db'; // Adjust the path based on your project structure
+// import { query } from '../utils/db'; // Adjust the path based on your project structure
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   try {
     // Example query to get hashed password from the database
-    const result = await query('SELECT * FROM users WHERE username = $1', [username]);
+    // const result = await query('SELECT * FROM users WHERE username = $1', [username]);
 
     if (result.length === 0) {
       // No user found with the provided username
