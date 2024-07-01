@@ -23,6 +23,19 @@ services:
     depends_on:
       - postgres
 
+  nextjs:
+    image: mertcant18/aiconcraft:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - API_KEY=lmwr_sk_0petDyN70v_1qzSOXkcWksba59peGWzp4zWVjh2B9SZtnTze
+      - USER=postgres
+      - HOST=postgres  # Updated to use the service name
+      - DATABASE=image-generator
+      - PASSWORD=pieter12
+      - DB_PORT=5432
+    depends_on:
+      - postgres
+
 volumes:
   postgres_data:
-
