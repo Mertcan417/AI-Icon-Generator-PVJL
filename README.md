@@ -22,13 +22,15 @@ Zorg ervoor dat je het volgende hebt geïnstalleerd:
 ### Installatie
 
 Kloon de repository:
-
-git clone https://github.com/Mertcan417/AI-Icon-Generator-PVJL.git)
+```
+git clone https://github.com/Mertcan417/AI-Icon-Generator-PVJL.git
 cd AI-Icon-Generator-PVJL
+```
 
 Bouw en Start de containers:
 
+```
 docker-compose up --build
-
+```
 ### Starten
-Na het gebruiken van docker-compose up --build kun je de applicatie gebruiken op http://localhost:3000/
+Na het gebruiken van ```docker-compose up --build``` kun je de applicatie gebruiken op http://localhost:3000/
