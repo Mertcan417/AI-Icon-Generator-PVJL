@@ -56,7 +56,7 @@ export default function Panel({ setCredits, credits }) {
         requestBody.image = selectedFile;
       }
       
-      const response = await axios.post("/api/proxy", requestBody);
+      const response = await axios.post("/api/generate", requestBody);
 
       setCredits((prevCredits) => prevCredits - 1);
       saveCredits(credits - 1);
