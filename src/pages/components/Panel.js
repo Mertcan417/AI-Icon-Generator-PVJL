@@ -31,7 +31,7 @@ export default function Panel({ setCredits, credits }) {
     localStorage.setItem("credits", credits.toString());
   };
 
-  const generateImage = async () => {
+  const triggerImageGeneration = async () => {
     if (prompt.trim().length < 5) {
       setShowPromptAlert(true);
       return;
@@ -49,25 +49,44 @@ export default function Panel({ setCredits, credits }) {
         prompt: "an icon from the following text: " + prompt.trim(),
         samples: amount,
         guidance_scale: 100,
-        quality: "HIGH",
+        quality: "LOW",
       };
 
       if (selectedFile) {
         requestBody.image = selectedFile;
       }
       
-      const response = await axios.post("/api/generate", requestBody);
+      const response = await axios.post("/api/triggerGeneration", requestBody);
+      const { jobId } = response.data;
 
       setCredits((prevCredits) => prevCredits - 1);
       saveCredits(credits - 1);
 
-      const imageUrls = response.data.data.map((item) => item.asset_url);
-      setResults((prevResults) => [...prevResults, ...imageUrls]);
+      pollStatus(jobId);
     } catch (error) {
-      console.error("Error generating image:", error);
-    } finally {
-      setIsLoading(false);
+      console.error("Error triggering image generation:", error);
     }
+  };
+
+  const pollStatus = async (jobId) => {
+    const interval = setInterval(async () => {
+      try {
+        const response = await axios.get(`/api/checkStatus?jobId=${jobId}`);
+        const data = response.data;
+
+        if (data.status === 'completed') {
+          const imageUrls = data.result.data.map((item) => item.asset_url);
+          setResults((prevResults) => [...prevResults, ...imageUrls]);
+          clearInterval(interval);
+          setIsLoading(false);
+        } else if (data.status === 'failed') {
+          clearInterval(interval);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("Error polling job status:", error);
+      }
+    }, 5000); // Poll every 5 seconds
   };
 
   const openInNewTab = (url) => {
@@ -144,7 +163,7 @@ export default function Panel({ setCredits, credits }) {
           <h1 className="text-2xl mb-4">Upload an Image (Optional)</h1>
           <div className="quality-buttons rounded-3xl custom:w-full lg:w-[459px]">
             <input
-              class="block w-full bg-blue-600 p-4 text-white text-lg rounded-lg cursor-pointer focus:outline-none"
+              className="block w-full bg-blue-600 p-4 text-white text-lg rounded-lg cursor-pointer focus:outline-none"
               id="large_size"
               type="file"
               onChange={handleFileUpload}
@@ -191,7 +210,7 @@ export default function Panel({ setCredits, credits }) {
         </div>
         <button
           className="flex items-center mt-7 bg-blue-600 text-white lg:w-40 h-16 px-4 py-2 rounded-3xl font-normal hover:bg-blue-800 focus:ring active:bg-blue-950 shadow-md"
-          onClick={generateImage}
+          onClick={triggerImageGeneration}
           aria-label="Generate image"
         >
           <IoIosSettings className="mr-1" />
