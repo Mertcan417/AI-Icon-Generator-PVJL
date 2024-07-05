@@ -1,4 +1,5 @@
-let jobQueue = {};
+// checkStatus.js
+import { jobQueue } from './jobQueue'; // Importing jobQueue from shared module
 
 export default function handler(req, res) {
   const { method, query } = req;
@@ -6,6 +7,7 @@ export default function handler(req, res) {
   if (method === 'GET') {
     const { jobId } = query;
     const job = jobQueue[jobId];
+    console.log(job);
 
     if (job) {
       res.status(200).json(job);

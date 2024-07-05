@@ -68,21 +68,7 @@ export default function Panel({ setCredits, credits }) {
     }
   };
 
-  const pollStatus = async (jobId) => {
-    const interval = setInterval(async () => {
-      try {
-        const response = await axios.get(`/api/checkStatus?jobId=${jobId}`);
-        const data = response.data;
-
-        if (data.status === 'completed') {
-          const imageUrls = data.result.data.map((item) => item.asset_url);
-          setResults((prevResults) => [...prevResults, ...imageUrls]);
-          clearInterval(interval);
-          setIsLoading(false);
-        } else if (data.status === 'failed') {
-          clearInterval(interval);
-          setIsLoading(false);
-        }
+  
       } catch (error) {
         console.error("Error polling job status:", error);
       }

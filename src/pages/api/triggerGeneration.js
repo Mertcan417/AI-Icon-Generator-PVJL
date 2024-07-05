@@ -1,6 +1,6 @@
+// triggerGeneration.js
 import { v4 as uuidv4 } from 'uuid';
-
-let jobQueue = {};
+import { jobQueue } from './jobQueue'; // Importing jobQueue from shared module
 
 export default async function handler(req, res) {
   const { method, body } = req;
@@ -8,6 +8,7 @@ export default async function handler(req, res) {
   if (method === 'POST') {
     const jobId = uuidv4(); // Generate a unique job ID
     jobQueue[jobId] = { status: 'pending', result: null };
+    console.log(jobQueue);
 
     // Simulate a long-running process with a delay
     setTimeout(async () => {
