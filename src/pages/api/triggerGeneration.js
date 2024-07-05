@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       } catch (error) {
         jobQueue[jobId] = { status: 'failed', result: null };
       }
-    }, 2000); // Simulate a delay of 2 seconds (adjust as needed)
+    }, 20000); // Simulate a delay of 20 seconds (adjust as needed)
 
     res.status(200).json({ jobId });
   } else {
