@@ -1,3 +1,4 @@
+// Panel.js
 import { IoIosSettings } from "react-icons/io";
 import { useState, useEffect } from "react";
 import axios from "axios";

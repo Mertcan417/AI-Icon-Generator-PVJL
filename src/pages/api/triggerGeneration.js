@@ -10,27 +10,24 @@ export default async function handler(req, res) {
     jobQueue[jobId] = { status: 'pending', result: null };
     console.log(jobQueue);
 
-    // Simulate a long-running process with a delay
-    setTimeout(async () => {
-      try {
-        const apiUrl = 'https://api.limewire.com/api/image/generation';
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.API_KEY}`, // Use environment variable for API key
-            'Accept': 'application/json',
-            'X-Api-Version': 'v1',
-          },
-          body: JSON.stringify(body),
-        });
+    try {
+      const apiUrl = 'https://api.limewire.com/api/image/generation';
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.API_KEY}`, // Use environment variable for API key
+          'Accept': 'application/json',
+          'X-Api-Version': 'v1',
+        },
+        body: JSON.stringify(body),
+      });
 
-        const data = await response.json();
-        jobQueue[jobId] = { status: 'completed', result: data };
-      } catch (error) {
-        jobQueue[jobId] = { status: 'failed', result: null };
-      }
-    }, 100); // Simulate a delay of 2 seconds (adjust as needed)
+      const data = await response.json();
+      jobQueue[jobId] = { status: 'completed', result: data };
+    } catch (error) {
+      jobQueue[jobId] = { status: 'failed', result: null };
+    }
 
     res.status(200).json({ jobId });
   } else {
