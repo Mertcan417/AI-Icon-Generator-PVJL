@@ -1,4 +1,3 @@
-// Panel.js
 import { IoIosSettings } from "react-icons/io";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -187,9 +186,9 @@ export default function Panel({ setCredits, credits }) {
               className="bg-red-100 border-l-4 border-red-400 text-red-700 p-4 rounded relative mt-5 w-full lg:w-[459px]"
               role="alert"
             >
-              <strong className="font-bold">Holy smokes!</strong>
+              <strong className="font-bold">Not Enough Credits!</strong>
               <p className="font-normal text-base">
-                The minimum amount is 1 and maximum amount is 4.
+                You don't have enough credits to generate an image.
               </p>
               <button
                 className=""
