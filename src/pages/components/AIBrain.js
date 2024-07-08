@@ -1,4 +1,3 @@
-// components/AILogo.js
 import React from 'react';
 
 export default function AIBrain() {

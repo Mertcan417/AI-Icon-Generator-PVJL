@@ -11,7 +11,7 @@ export default function Panel({ setCredits, credits }) {
   const [showAlert, setShowAlert] = useState(false);
   const [showPromptAlert, setShowPromptAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null); // State to store uploaded file
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileUpload = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -19,7 +19,6 @@ export default function Panel({ setCredits, credits }) {
 
   useEffect(() => {
     const savedCredits = localStorage.getItem("credits");
-    console.log("LOCALSTORAGE CREDITS: " + savedCredits);
     if (savedCredits !== null) {
       setCredits(parseInt(savedCredits));
     } else {
@@ -102,7 +101,7 @@ export default function Panel({ setCredits, credits }) {
     const value = parseInt(e.target.value, 10);
     if (value > 4 || value === 0) {
       setShowAlert(true);
-      setAmount(4);
+      setAmount(2);
     } else {
       setShowAlert(false);
       setAmount(value);
@@ -176,7 +175,7 @@ export default function Panel({ setCredits, credits }) {
             type="number"
             className="amount-text rounded-2xl p-3 font-normal w-full lg:w-[459px] border border-gray-300"
             min="1"
-            max="4"
+            max="2"
             value={amount}
             onChange={handleAmountChange}
             aria-label="Amount of icons to generate"

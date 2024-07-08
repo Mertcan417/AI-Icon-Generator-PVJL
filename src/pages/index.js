@@ -1,34 +1,28 @@
 import { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { Transition } from "@headlessui/react"; // Import Headless UI for transitions
 
 export default function Home() {
   const [credits, setCredits] = useState(0);
-  const [showWelcome, setShowWelcome] = useState(false); // State to control welcome section animation
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
-    // Load credits from local storage on component mount
     const savedCredits = localStorage.getItem("credits");
     if (savedCredits !== null) {
       setCredits(parseInt(savedCredits));
     }
-    // Trigger welcome section animation after delay
     setTimeout(() => {
       setShowWelcome(true);
     }, 500);
   }, []);
 
-  // Refs for scroll targets
   const featuresRef = useRef(null);
   const pricingRef = useRef(null);
 
-  // Scroll to Features section
   const scrollToFeatures = () => {
     featuresRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Scroll to Pricing Plans section
   const scrollToPricing = () => {
     pricingRef.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -41,7 +35,6 @@ export default function Home() {
           scrollToPricing={scrollToPricing}
         />
         <main className="mt-12">
-          {/* Welcome Section */}
           <section
             className={`text-center ${
               showWelcome
@@ -64,7 +57,6 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Video Section */}
           <section className="text-center mt-32">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-4xl font-medium mb-8">
@@ -84,12 +76,12 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Features Section */}
           <section className="text-center mt-32">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-4xl font-medium mb-8" ref={featuresRef}>Features</h2>
+              <h2 className="text-4xl font-medium mb-8" ref={featuresRef}>
+                Features
+              </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                {/* Feature Cards */}
                 <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
                   <img
                     src="/clock.png"
@@ -186,14 +178,15 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Pricing Plans Section */}
           <section className="mt-32 mb-24">
             <div className="mx-auto">
-              <h2 className="text-4xl text-center font-medium mb-8" ref={pricingRef}>
+              <h2
+                className="text-4xl text-center font-medium mb-8"
+                ref={pricingRef}
+              >
                 Suitable pricing plans
               </h2>
               <div className="flex flex-wrap justify-center gap-4 sm:flex-no-wrap">
-                {/* Free Plan Card */}
                 <div className="bg-gradient-to-r text-white from-gray-400 to-blue-500 shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
                   <div className="flex items-center mb-4">
                     <h2 className="text-2xl font-bold">Starter</h2>
@@ -208,7 +201,6 @@ export default function Home() {
                   </button>
                 </div>
 
-                {/* Starter Plan Card */}
                 <div className="bg-gradient-to-r text-white from-yellow-400 to-orange-500 shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
                   <div className="flex items-center mb-4">
                     <h2 className="text-2xl font-bold">Pro</h2>
@@ -223,7 +215,6 @@ export default function Home() {
                   </button>
                 </div>
 
-                {/* Enterprise Plan Card */}
                 <div className="bg-gradient-to-r text-white from-purple-500 via-pink-500 to-red-500 shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
                   <div className="flex items-center mb-4">
                     <h2 className="text-2xl font-bold">Enterprise</h2>

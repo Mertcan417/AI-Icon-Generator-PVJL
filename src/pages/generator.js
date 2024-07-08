@@ -7,10 +7,9 @@ import Footer from "./components/Footer";
 
 export default function Generator() {
   const [credits, setCredits] = useState(0);
-  const [username, setUsername] = useState("John Doe"); // Example username
+  const [username, setUsername] = useState("John Doe");
 
   useEffect(() => {
-    // Load credits from local storage on component mount
     const savedCredits = localStorage.getItem("credits");
     if (savedCredits !== null) {
       setCredits(parseInt(savedCredits));

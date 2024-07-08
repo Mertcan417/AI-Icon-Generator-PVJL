@@ -1,4 +1,3 @@
-// pages/api/signup.js
 import { query } from "../../lib/db";
 import bcrypt from "bcrypt";
 
@@ -13,7 +12,6 @@ export default async function handler(req, res) {
     }
 
     try {
-      // Check if the username already exists
       const userCheck = await query("SELECT * FROM users WHERE username = $1", [
         username,
       ]);
@@ -21,10 +19,8 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "User already exists" });
       }
 
-      // Hash the password before storing it in the database
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Insert user into the database
       const result = await query(
         "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *",
         [username, hashedPassword]

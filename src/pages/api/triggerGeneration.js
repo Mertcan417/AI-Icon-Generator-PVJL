@@ -1,14 +1,12 @@
-// triggerGeneration.js
 import { v4 as uuidv4 } from 'uuid';
-import { jobQueue } from './jobQueue'; // Importing jobQueue from shared module
+import { jobQueue } from './jobQueue';
 
 export default async function handler(req, res) {
   const { method, body } = req;
 
   if (method === 'POST') {
-    const jobId = uuidv4(); // Generate a unique job ID
+    const jobId = uuidv4();
     jobQueue[jobId] = { status: 'pending', result: null };
-    console.log(jobQueue);
 
     try {
       const apiUrl = 'https://api.limewire.com/api/image/generation';
@@ -16,7 +14,7 @@ export default async function handler(req, res) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.API_KEY}`, // Use environment variable for API key
+          'Authorization': `Bearer ${process.env.API_KEY}`,
           'Accept': 'application/json',
           'X-Api-Version': 'v1',
         },

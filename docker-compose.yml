@@ -30,7 +30,7 @@ services:
     environment:
       - API_KEY=lmwr_sk_0petDyN70v_1qzSOXkcWksba59peGWzp4zWVjh2B9SZtnTze
       - USER=postgres
-      - HOST=postgres  # Updated to use the service name
+      - HOST=postgres
       - DATABASE=image-generator
       - PASSWORD=pieter12
       - DB_PORT=5432
