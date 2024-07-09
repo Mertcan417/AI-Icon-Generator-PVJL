@@ -1,9 +1,9 @@
 // index.js
 import { useState, useEffect } from "react";
-import Header from "./components/Header";
-import Panel from "./components/Panel";
+import Header from "../components/Header";
+import Panel from "../components/Panel";
 import { HiOutlineCreditCard } from "react-icons/hi";
-import Footer from "./components/Footer";
+import Footer from "../components/Footer";
 
 export default function Generator() {
   const [credits, setCredits] = useState(0);
