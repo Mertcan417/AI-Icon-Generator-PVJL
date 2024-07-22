@@ -26,7 +26,7 @@ export default function GeneratePage() {
           </h1>
           <div className="flex justify-center mt-10">
             <div
-              className="flex items-center bg-yellow-500 text-white w-54 h-14 px-4 py-2 rounded-3xl hover:bg-yellow-600"
+              className="flex items-center bg-yellow-500 text-white w-64 h-14 px-4 py-2 rounded-3xl hover:bg-yellow-600"
               style={{ fontSize: "20px" }}
             >
               <HiOutlineCreditCard className="mr-1" />
