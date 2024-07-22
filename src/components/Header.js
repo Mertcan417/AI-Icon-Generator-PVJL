@@ -2,71 +2,53 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import AIBrain from "./AIBrain";
+import Logo from "./common/Logo";
 
-export default function Header({ scrollToFeatures, scrollToPricing }) {
+const Header = ({ scrollToFeatures, scrollToPricing }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 772);
-    };
-
+    const handleResize = () => setIsMobile(window.innerWidth < 772);
     handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isAuthPage =
-    router.pathname === "/login" || router.pathname === "/signup";
+  const isAuthPage = ["/login", "/signup"].includes(router.pathname);
+  const renderLinks = () => (
+    <>
+      <Link href="/generate" className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 md:ml-4">
+        Generate
+      </Link>
+      <a onClick={scrollToFeatures} className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 md:ml-4">
+        Features
+      </a>
+      <a onClick={scrollToPricing} className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 md:ml-4">
+        Price
+      </a>
+    </>
+  );
 
   return (
     <header className="p-4 bg-white">
       <nav className="flex justify-between items-center flex-wrap">
         <div className="flex items-center justify-between w-full md:w-auto mb-4 md:mb-0 flex-wrap">
           <Link href="/">
-            <AIBrain />
+            <Logo />
           </Link>
-          {!isAuthPage && !isMobile && (
-            <>
-              <Link
-                href="/generator"
-                className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 md:ml-4"
-              >
-                Generate
-              </Link>
-              <a
-                href="/#features"
-                onClick={() => scrollToFeatures()}
-                className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 md:ml-4"
-              >
-                Features
-              </a>
-              <a
-                href="/#price"
-                onClick={() => scrollToPricing()}
-                className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 md:ml-4"
-              >
-                Price
-              </a>
-            </>
-          )}
-          {!isAuthPage && isMobile && (
+          {!isAuthPage && (isMobile ? (
             <button
               className="ml-2 md:ml-4"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? (
-                <AiOutlineClose className="text-2xl cursor-pointer" />
-              ) : (
-                <AiOutlineMenu className="text-2xl cursor-pointer" />
-              )}
+              {isMenuOpen ? <AiOutlineClose className="text-2xl cursor-pointer" /> : <AiOutlineMenu className="text-2xl cursor-pointer" />}
             </button>
-          )}
+          ) : (
+            renderLinks()
+          ))}
         </div>
         {!isAuthPage && !isMobile && (
           <Link
@@ -77,37 +59,16 @@ export default function Header({ scrollToFeatures, scrollToPricing }) {
           </Link>
         )}
       </nav>
-      {isMobile && isMenuOpen && (
+      {isMobile && isMenuOpen && !isAuthPage && (
         <div className="flex flex-col items-center mt-4 space-y-4">
-          {!isAuthPage && (
-            <>
-              <Link href="/generator" className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2">
-                  Generate
-              </Link>
-              <a
-                href="#features"
-                onClick={() => scrollToFeatures()}
-                className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2"
-              >
-                Features
-              </a>
-              <a
-                href="#price"
-                onClick={() => scrollToPricing()}
-                className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2"
-              >
-                Price
-              </a>
-              <Link
-                href="/login"
-                className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 flex items-center"
-              >
-                Sign In
-              </Link>
-            </>
-          )}
+          {renderLinks()}
+          <Link href="/login" className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 flex items-center">
+            Sign In
+          </Link>
         </div>
       )}
     </header>
   );
-}
+};
+
+export default Header;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Header from "../components/Header";
 
-const SignupPage = () => {
+const SignUpPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");

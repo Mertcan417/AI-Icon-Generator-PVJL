@@ -1,11 +1,11 @@
 // index.js
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
-import Panel from "../components/Panel";
+import Panel from "../components/Panel/Panel";
 import { HiOutlineCreditCard } from "react-icons/hi";
 import Footer from "../components/Footer";
 
-export default function Generator() {
+export default function GeneratePage() {
   const [credits, setCredits] = useState(0);
   const [username, setUsername] = useState("John Doe");
 
@@ -18,9 +18,8 @@ export default function Generator() {
 
   return (
     <>
-      <div className="p-5">
+      <div className="p-5 mb-16">
         <Header isGeneratorPage={true} username={username} />
-        <h1></h1>
         <main>
           <h1 className="text-4xl font-medium mb-4 text-center">
             <span className="text-blue-600">AI</span>conCraft

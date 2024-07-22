@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function AIBrain() {
+export default function Logo() {
   return (
     <div className="w-28 bg-transparent h-24">
       <img

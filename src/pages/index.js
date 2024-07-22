@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Link from "next/link";
 
 export default function Home() {
   const [credits, setCredits] = useState(0);
@@ -42,12 +43,12 @@ export default function Home() {
                 : "opacity-0 -translate-y-10"
             } transition-opacity duration-1000 ease-in-out transform`}
           >
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-xl mx-auto">
               <h1 className="text-4xl font-medium mb-4">
                 Welcome to <span className="text-blue-600">AI</span>conCraft
               </h1>
-              <p className="text-lg mb-8">
-                Generate custom icons instantly with IconCraft.{" "}
+              <p className="text-xl mb-8">
+                Generate custom icons instantly with IconCraft.<br></br>{" "}
                 <strong>Simply click</strong> to bring your ideas to life with
                 AI precision. Perfect for designers and enthusiasts alike,
                 IconCraft makes icon creation <strong>effortless</strong> and{" "}
@@ -74,19 +75,27 @@ export default function Home() {
                 </video>
               </div>
             </div>
+            <div className="flex justify-center mt-16">
+            <Link
+                href="/generate"
+                className="flex items-center justify-center w-64 h-14 bg-blue-600 text-white px-6 py-3 rounded-2xl hover:bg-blue-800 focus:ring focus:ring-blue-300 active:bg-blue-950 text-xl transition-transform transform hover:-translate-y-1 hover:scale-105 shadow-lg hover:shadow-xl animate-pulse"
+              >
+                Generate Your Icon!
+              </Link>
+            </div>
           </section>
 
           <section className="text-center mt-32">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-5xl mx-auto">
               <h2 className="text-4xl font-medium mb-8" ref={featuresRef}>
                 Features
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-16 mt-24">
                 <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
                   <img
                     src="/clock.png"
                     alt="Clock icon"
-                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                    className="mx-auto mb-4 rounded-t-lg"
                   />
                   <p className="text-sm text-center">
                     There is <strong>no need</strong> for hiring a{" "}
@@ -98,7 +107,7 @@ export default function Home() {
                   <img
                     src="/thumb.png"
                     alt="Thumb icon"
-                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                    className="mx-auto mb-4 rounded-t-lg"
                   />
                   <p className="text-sm text-center">
                     The generated icons are of{" "}
@@ -109,7 +118,7 @@ export default function Home() {
                   <img
                     src="/blitz.png"
                     alt="Blitz icon"
-                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                    className="mx-auto mb-4 rounded-t-lg"
                   />
                   <p className="text-sm text-center">
                     Icons generated <strong>quickly</strong>.
@@ -119,7 +128,7 @@ export default function Home() {
                   <img
                     src="/cash.png"
                     alt="Cash icon"
-                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                    className="mx-auto mb-4 rounded-t-lg"
                   />
                   <p className="text-sm text-center">
                     The application offers <strong>competitive pricing</strong>{" "}
@@ -131,7 +140,7 @@ export default function Home() {
                   <img
                     src="/service.png"
                     alt="Service icon"
-                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                    className="mx-auto mb-4 rounded-t-lg"
                   />
                   <p className="text-sm text-center">
                     Users have several <strong>options</strong> when generating
@@ -144,7 +153,7 @@ export default function Home() {
                   <img
                     src="/extra.png"
                     alt="Extra icon"
-                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                    className="mx-auto mb-4 rounded-t-lg"
                   />
                   <p className="text-sm text-center">
                     In addition to icon generation, the application offers
@@ -155,30 +164,39 @@ export default function Home() {
                   <img
                     src="/clicking.png"
                     alt="Clicking icon"
-                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                    className="mx-auto mb-4 rounded-t-lg"
                   />
                   <p className="text-sm text-center">
                     The application provides a <strong>user-friendly</strong>{" "}
-                    experience and is
-                    <strong>easy</strong> to navigate, devoid of complexity.
+                    experience and is <strong>easy</strong> to navigate, devoid
+                    of complexity.
                   </p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
                   <img
                     src="/save.png"
                     alt="Save icon"
-                    className="w-20 h-20 mx-auto mb-4 rounded-t-lg"
+                    className="mx-auto mb-4 rounded-t-lg"
                   />
                   <p className="text-sm text-center">
-                    All generated icons are automatically <strong>saved</strong>{" "}
-                    and accessible through a clear list.
+                    All generated icons are automatically{" "}
+                    <strong> saved</strong> and accessible through a clear list.
                   </p>
                 </div>
               </div>
             </div>
+
+            <div className="flex justify-center mt-16">
+              <Link
+                href="/generate"
+                className="flex items-center justify-center w-64 h-14 bg-blue-600 text-white px-6 py-3 rounded-2xl hover:bg-blue-800 focus:ring focus:ring-blue-300 active:bg-blue-950 text-xl transition-transform transform hover:-translate-y-1 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Generate Your Icon!
+              </Link>
+            </div>
           </section>
 
-          <section className="mt-32 mb-24">
+          <section className="mt-32 mb-48">
             <div className="mx-auto">
               <h2
                 className="text-4xl text-center font-medium mb-8"
@@ -186,22 +204,23 @@ export default function Home() {
               >
                 Suitable pricing plans
               </h2>
-              <div className="flex flex-wrap justify-center gap-4 sm:flex-no-wrap">
-                <div className="bg-gradient-to-r text-white from-gray-400 to-blue-500 shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
+
+              <div className="flex flex-wrap justify-center gap-20 sm:flex-no-wrap mt-24">
+                <div className="bg-blue-600 text-white shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
                   <div className="flex items-center mb-4">
-                    <h2 className="text-2xl font-bold">Starter</h2>
+                    <h2 className="text-2xl font-bold">Basic</h2>
                   </div>
                   <div className="text-3xl font-bold mb-4">€10</div>
                   <p className="mb-4">Generate up to 10 images</p>
                   <ul className="mb-6">
                     <li className="mb-2">10 credits</li>
                   </ul>
-                  <button className="text-center py-2 px-4 rounded-lg bg-white text-blue-500 hover:bg-gray-200">
+                  <button className="transition ease-in-out delay-50 text-center py-2 px-4 rounded-lg bg-black text-white hover:bg-gray-700">
                     Buy For €10
                   </button>
                 </div>
 
-                <div className="bg-gradient-to-r text-white from-yellow-400 to-orange-500 shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
+                <div className="bg-blue-600 text-white shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
                   <div className="flex items-center mb-4">
                     <h2 className="text-2xl font-bold">Pro</h2>
                   </div>
@@ -210,21 +229,21 @@ export default function Home() {
                   <ul className="mb-6">
                     <li className="mb-2">50 credits</li>
                   </ul>
-                  <button className="text-center py-2 px-4 rounded-lg bg-white text-yellow-500 hover:bg-gray-200">
+                  <button className="transition ease-in-out delay-50 text-center py-2 px-4 rounded-lg bg-black text-white hover:bg-gray-700">
                     Buy For €15
                   </button>
                 </div>
 
-                <div className="bg-gradient-to-r text-white from-purple-500 via-pink-500 to-red-500 shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
+                <div className="bg-blue-600 text-white shadow-md rounded-lg p-6 w-80 border-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
                   <div className="flex items-center mb-4">
-                    <h2 className="text-2xl font-bold">Enterprise</h2>
+                    <h2 className="text-2xl font-bold">Ultimate</h2>
                   </div>
                   <div className="text-3xl font-bold mb-4">€20</div>
                   <p className="mb-4">Generate up to 100 images</p>
                   <ul className="mb-6">
                     <li className="mb-2">100 credits</li>
                   </ul>
-                  <button className="text-center py-2 px-4 rounded-lg bg-white text-purple-500 hover:bg-gray-200">
+                  <button className="transition ease-in-out delay-50 text-center py-2 px-4 rounded-lg bg-black text-white hover:bg-gray-700">
                     Buy For €20
                   </button>
                 </div>
