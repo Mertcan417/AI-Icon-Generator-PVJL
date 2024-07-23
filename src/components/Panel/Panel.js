@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Input from "../common/Input";
 import Results from "./Results";
 import LoadingScreen from "../common/LoadingScreen";
-import { useCredits } from "../hooks/useCredits";
+import { useCredits } from "../hooks/UseCredits";
 import { IoIosSettings } from "react-icons/io";
 import axios from "axios";
 
