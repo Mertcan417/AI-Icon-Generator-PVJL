@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="p-5">
+      <div>
         <Header
           scrollToFeatures={scrollToFeatures}
           scrollToPricing={scrollToPricing}
@@ -56,6 +56,14 @@ export default function Home() {
                 unfold!
               </p>
             </div>
+            <div className="flex justify-center">
+              <Link
+                href="/generate"
+                className="flex items-center justify-center h-14 bg-blue-600 text-white px-6 py-3 rounded-2xl hover:bg-blue-800 focus:ring focus:ring-blue-300 active:bg-blue-950 text-xl transition-transform transform hover:-translate-y-1 hover:scale-105 shadow-lg hover:shadow-xl animate-pulse"
+              >
+                Get Started!
+              </Link>
+            </div>
           </section>
 
           <section className="text-center mt-32">
@@ -75,17 +83,9 @@ export default function Home() {
                 </video>
               </div>
             </div>
-            <div className="flex justify-center mt-16">
-            <Link
-                href="/generate"
-                className="flex items-center justify-center w-64 h-14 bg-blue-600 text-white px-6 py-3 rounded-2xl hover:bg-blue-800 focus:ring focus:ring-blue-300 active:bg-blue-950 text-xl transition-transform transform hover:-translate-y-1 hover:scale-105 shadow-lg hover:shadow-xl animate-pulse"
-              >
-                Generate Your Icon!
-              </Link>
-            </div>
           </section>
 
-          <section className="text-center mt-32">
+          <section className="text-center mt-32 rounded-xl bg-gray-100 p-10">
             <div className="max-w-5xl mx-auto">
               <h2 className="text-4xl font-medium mb-8" ref={featuresRef}>
                 Features
@@ -197,6 +197,64 @@ export default function Home() {
           </section>
 
           <section className="mt-32 mb-48">
+            <div className="max-w-5xl mx-auto">
+              <h2
+                className="text-4xl text-center font-medium mb-8"
+                ref={pricingRef}
+              >
+                Icons designed with <span className="text-blue-600">AI</span>concraft
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-16 mt-24">
+                <div className="p-6 transition-transform duration-300 transform hover:scale-105">
+                  <img
+                    src="/example-1.jpg"
+                    alt="example of icon designed with AIconcraft"
+                    className="mx-auto mb-4 rounded-lg"
+                  />
+                </div>
+                <div className="p-6 transition-transform duration-300 transform hover:scale-105">
+                  <img
+                    src="/example-2.jpg"
+                    alt="example of icon designed with AIconcraft"
+                    className="mx-auto mb-4 rounded-lg"
+                  />
+                </div>
+
+                <div className="p-6 transition-transform duration-300 transform hover:scale-105">
+                  <img
+                    src="/example-3.jpg"
+                    alt="example of icon designed with AIconcraft"
+                    className="mx-auto mb-4 rounded-lg"
+                  />
+                </div>
+
+                <div className="p-6 transition-transform duration-300 transform hover:scale-105">
+                  <img
+                    src="/example-1.jpg"
+                    alt="example of icon designed with AIconcraft"
+                    className="mx-auto mb-4 rounded-lg"
+                  />
+                </div>
+                <div className="p-6 transition-transform duration-300 transform hover:scale-105">
+                  <img
+                    src="/example-2.jpg"
+                    alt="example of icon designed with AIconcraft"
+                    className="mx-auto mb-4 rounded-lg"
+                  />
+                </div>
+
+                <div className="p-6 transition-transform duration-300 transform hover:scale-105">
+                  <img
+                    src="/example-3.jpg"
+                    alt="example of icon designed with AIconcraft"
+                    className="mx-auto mb-4 rounded-lg"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="h-50 bg-gray-100 p-10">
             <div className="mx-auto">
               <h2
                 className="text-4xl text-center font-medium mb-8"
