@@ -62,10 +62,10 @@ const Panel = () => {
 
     try {
       let requestBody = {
-        prompt: "a 4k high quality icon from " + prompt.trim(),
+        prompt: "an icon from " + prompt.trim(),
         samples: amount,
-        guidance_scale: 100,
-        quality: "LOW",
+        guidance_scale: 80,
+        quality: "HIGH",
       };
 
       if (selectedFile) {
