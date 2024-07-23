@@ -18,7 +18,7 @@ const Header = ({ scrollToFeatures, scrollToPricing }) => {
 
   const isAuthPage = ["/login", "/signup"].includes(router.pathname);
   const renderLinks = () => (
-    <>
+    <div className="ml-10">
       <Link href="/generate" className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 md:ml-4">
         Generate
       </Link>
@@ -28,7 +28,7 @@ const Header = ({ scrollToFeatures, scrollToPricing }) => {
       <a onClick={scrollToPricing} className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 md:ml-4">
         Price
       </a>
-    </>
+    </div>
   );
 
   return (
@@ -53,7 +53,7 @@ const Header = ({ scrollToFeatures, scrollToPricing }) => {
         {!isAuthPage && !isMobile && (
           <Link
             href="/login"
-            className="flex items-center bg-blue-600 text-white px-6 py-3 rounded-2xl hover:bg-blue-800 focus:ring focus:ring-blue-300 active:bg-blue-950 text-xl"
+            className="flex items-center bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-800 focus:ring focus:ring-blue-300 active:bg-blue-950 text-xl"
           >
             Sign In
           </Link>

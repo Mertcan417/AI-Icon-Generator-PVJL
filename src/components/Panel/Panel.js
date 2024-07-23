@@ -102,7 +102,7 @@ const Panel = () => {
       } catch (error) {
         console.error("Error polling job status:", error);
       }
-    }, 5000); // Poll every 5 seconds
+    }); // Poll every 5 seconds
   };
 
   return (

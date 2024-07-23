@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Logo() {
   return (
-    <div className="w-28 bg-transparent h-24">
+    <div className="w-36 bg-transparent">
       <img
         src="/ai-high-resolution-logo.png"
         alt="AI Logo"
