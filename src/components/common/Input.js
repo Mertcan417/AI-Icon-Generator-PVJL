@@ -22,7 +22,7 @@ const Input = ({
         ></textarea>
       ) : type === "file" ? (
         <input
-          className="block w-[459px] bg-blue-600 p-4 text-white text-lg rounded-lg cursor-pointer focus:outline-none"
+          className="block w-[459px] bg-blue-600 p-4 font-normal text-white text-lg rounded-lg cursor-pointer focus:outline-none"
           type="file"
           onChange={onChange}
           {...inputProps}

@@ -28,7 +28,7 @@ export default function GeneratePage() {
 
   return (
     <>
-      <div className="p-5 mb-16">
+      <div className="mb-32">
         <Header isGeneratorPage={true} username={username} />
         <main>
           <h1 className="text-4xl font-medium mb-4 text-center">
