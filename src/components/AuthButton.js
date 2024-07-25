@@ -15,7 +15,7 @@ export default function AuthButton({ style }) {
   return (
     <>
       Not signed in <br />
-      <button className={`${style}`} onClick={() => signIn()}>
+      <button className={`${style}`} onClick={() => signIn("google")}>
         Sign in
       </button>
     </>
