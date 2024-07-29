@@ -1,13 +1,33 @@
-// lib/auth.js
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../pages/api/auth/[...nextauth]';
+import { getSession, signIn, signOut } from "next-auth/react";
 
-export async function withAuth(req, res, handler) {
-  const session = await getServerSession(req, res, authOptions);
+export const isAuthenticated = async () => {
+  const session = await getSession();
+  return !!session;
+};
 
-  if (session) {
-    return handler(req, res, session);
-  } else {
-    res.status(401).json({ error: 'You must be signed in to access this resource.' });
+export const authenticateUser = async () => {
+  const authenticated = await isAuthenticated();
+  if (!authenticated) {
+    signIn("google");
   }
-}
+  return authenticated;
+};
+
+export const handleLogout = async (session) => {
+  let isUserAuthenticated = false;
+  if (!session) {
+    isUserAuthenticated = await isAuthenticated();
+  } else {
+    isUserAuthenticated = !!session;
+  }
+  if (isUserAuthenticated) {
+    await signOut({ callbackUrl: "/" });
+  }
+};
+
+export const handleLogin = async () => {
+  const isUserAuthenticated = await isAuthenticated();
+  if (!isUserAuthenticated) {
+    await signIn("google");
+  }
+};

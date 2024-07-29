@@ -3,10 +3,13 @@ import Link from "next/link";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import Logo from "./common/Logo";
 import AuthButton from "./AuthButton";
+import { handleLogin, isAuthenticated } from "@/lib/auth";
+import { useRouter } from "next/router";
 
 const Header = ({ scrollToFeatures, scrollToPricing }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 772);
@@ -15,10 +18,22 @@ const Header = ({ scrollToFeatures, scrollToPricing }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleClick = async (e) => {
+    e.preventDefault();
+
+    const authenticated = await isAuthenticated();
+    if (authenticated) {
+      router.push("/generate");
+    } else {
+      await handleLogin();
+    }
+  };
+
   const renderLinks = () => (
     <div className="ml-10">
       <Link
         href="/generate"
+        onClick={handleClick}
         className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 md:ml-4"
       >
         Generate
@@ -35,6 +50,12 @@ const Header = ({ scrollToFeatures, scrollToPricing }) => {
       >
         Price
       </a>
+      <Link
+      href={"/chat"}
+        className="text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 md:ml-4"
+      >
+        Chat
+      </Link>
     </div>
   );
 
@@ -62,13 +83,21 @@ const Header = ({ scrollToFeatures, scrollToPricing }) => {
           )}
         </div>
         {!isMobile && (
-          <AuthButton style={"flex items-center bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-800 focus:ring focus:ring-blue-300 active:bg-blue-950 text-xl"}></AuthButton>
+          <AuthButton
+            style={
+              "flex items-center bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-800 focus:ring focus:ring-blue-300 active:bg-blue-950 text-xl"
+            }
+          ></AuthButton>
         )}
       </nav>
       {isMobile && isMenuOpen && (
         <div className="flex flex-col items-center mt-4 space-y-4">
           {renderLinks()}
-          <AuthButton style={"text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 flex items-center"}></AuthButton>
+          <AuthButton
+            style={
+              "text-xl font-medium cursor-pointer hover:text-blue-600 ml-2 flex items-center"
+            }
+          ></AuthButton>
         </div>
       )}
     </header>

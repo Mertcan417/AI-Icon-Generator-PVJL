@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
 import { jobQueue } from "./jobQueue";
-import { withAuth } from "../../lib/auth";
 
 export default async function handler(req, res) {
   const { method, body } = req;
 
   if (method === "POST") {
     const jobId = uuidv4();
+    console.log(jobId);
     jobQueue[jobId] = { status: "pending", result: null };
 
     try {
@@ -15,8 +15,8 @@ export default async function handler(req, res) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.API_KEY}`,
-          Accept: "application/json",
+          "Authorization": `Bearer ${process.env.API_KEY}`,
+          "Accept": "application/json",
           "X-Api-Version": "v1",
         },
         body: JSON.stringify(body),

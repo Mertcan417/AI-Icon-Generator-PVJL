@@ -38,51 +38,37 @@ const Panel = () => {
   const handlePromptChange = (e) => {
     setPrompt(e.target.value);
   };
-
   const triggerImageGeneration = async () => {
     if (prompt.trim().length < 5) {
-      setAlertMessage({
-        title: "Too short!",
-        body: "The prompt should be at least 5 characters long and not just spaces.",
-      });
       setShowPromptAlert(true);
       return;
     }
-
     if (credits <= 0) {
-      setAlertMessage({
-        title: "Not Enough Credits!",
-        body: "You don't have enough credits to generate an image.",
-      });
       setShowAlert(true);
       return;
     }
-
     setIsLoading(true);
-
     try {
       let requestBody = {
-        prompt: "an icon from " + prompt.trim(),
+        prompt: "an icon from the following text: " + prompt.trim(),
         samples: amount,
-        guidance_scale: 80,
-        quality: "HIGH",
+        guidance_scale: 100,
+        quality: "LOW",
       };
-
       if (selectedFile) {
         requestBody.image = selectedFile;
       }
-
-      const response = await axios.post("/api/triggerGeneration", requestBody);
+      
+      const response = await axios.post("/api/generateIcon", requestBody);
       const { jobId } = response.data;
-
       setCredits((prevCredits) => prevCredits - 1);
       saveCredits(credits - 1);
-
       pollStatus(jobId);
     } catch (error) {
       console.error("Error triggering image generation:", error);
     }
   };
+
 
   const pollStatus = async (jobId) => {
     const interval = setInterval(async () => {
@@ -90,20 +76,21 @@ const Panel = () => {
         const response = await axios.get(`/api/checkStatus?jobId=${jobId}`);
         const data = response.data;
 
-        if (data.status === "completed") {
+        if (data.status === 'completed') {
           const imageUrls = data.result.data.map((item) => item.asset_url);
           setResults((prevResults) => [...prevResults, ...imageUrls]);
           clearInterval(interval);
           setIsLoading(false);
-        } else if (data.status === "failed") {
+        } else if (data.status === 'failed') {
           clearInterval(interval);
           setIsLoading(false);
         }
       } catch (error) {
         console.error("Error polling job status:", error);
       }
-    }); // Poll every 5 seconds
+    }, 5000); // Poll every 5 seconds
   };
+
 
   return (
     <div className="rounded-3xl mt-6 mb-10 mx-auto flex flex-col lg:flex-row py-6 px-4 lg:px-10 font-bold flex-wrap bg-gray-100 text-xl shadow-lg max-w-6xl gap-10">
